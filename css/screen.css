@@ -1,23 +1,17 @@
 /*------------------------------------*\
 #FONTS
 \*------------------------------------*/
- 
+
 @font-face {
-    font-family: "Inter UI Web";
+    font-family: "Inter Web";
     font-weight: 400;
-    src: url("../fonts/Inter-UI-Regular.woff2") format("woff2")
+    src: url("../fonts/Inter-Regular.woff2") format("woff2")
 }
- 
+
 @font-face {
-    font-family: "Inter UI Web";
+    font-family: "Inter Web";
     font-weight: 600;
-    src: url("../fonts/Inter-UI-Medium.woff2") format("woff2")
-}
- 
-@font-face {
-    font-family: "Inter UI Web";
-    font-weight: 700;
-    src: url("../fonts/Inter-UI-Bold.woff2") format("woff2")
+    src: url("../fonts/Inter-SemiBold.woff2") format("woff2")
 }
  
 /*------------------------------------*\
@@ -61,6 +55,7 @@
     --global-input-hover-borderColor: var(--global-color-neutral-xx-light);
     --global-input-focus-borderColor: var(--global-color-alpha);
     --global-input-boxShadow: 0 0 0 3px var(--global-color-alpha-x-transparent);
+    --global-input-boxShadow--focus: 0 0 0 3px #3385ff33;
 }
  
 /*------------------------------------*\
@@ -611,6 +606,7 @@ input::placeholder {
     align-items: center;
 }
  
+
 /*
     Component: Input
     ---
@@ -647,7 +643,7 @@ input::placeholder {
  
 /* option input for checkboxes and radio buttons */
  
-.c-input-option {
+.c-option {
     margin-right: 8px;
 }
  
@@ -710,11 +706,12 @@ input::placeholder {
 */
  
 .c-option-list {
+    margin-bottom: 24px;
  
 }
  
 .c-option-list__item {
- 
+    margin-bottom: 12px;
 }
  
 /*
@@ -727,20 +724,142 @@ input::placeholder {
  
 /* checked state */
  
-.c-custom-input-option-hidden:checked + .c-custom-input-option-label {
-    /*
-        Do magic stuff here, for example:
-        background-color: red;
-    */
+.c-option--hidden:checked + .c-custom-option {
+    /* background-color: red; */
 }
  
-.c-custom-input-option-hidden:checked + .c-custom-input-option-label .c-custom-input-option__symbol {
-    /*
-        Do magic stuff here, for example:
-        fill: blue;
-    */
+.c-option--hidden:checked + .c-custom-option .c-custom-option__symbol {
+    /* fill: blue; */
 }
  
+/*
+    Component: Custom options
+    ---
+    Custom checkboxes & radio buttons
+*/
+
+/* Hide the actual input with the class .o-hide-accessible */
+
+.c-custom-option {
+    display: flex;
+
+}
+
+.c-custom-option__fake-input {
+    display: flex;
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--color-neutral-xxx-light);
+    margin-right: 8px;
+    box-shadow: var(--inset-shadow);
+    justify-content: center;
+    align-items: center;
+}
+
+.c-custom-option__fake-input--checkbox {
+    border-radius: 3px;
+
+}
+
+.c-custom-option__fake-input--radio {
+    border-radius: 50%;
+}
+
+.c-custom-option__symbol {
+    transform: scale(0);
+    will-change: opacity, transform;
+    transition: opacity .3s ease-out, transform 200ms cubic-bezier(1,-3.24, 0, 4.66);
+    opacity: 0;
+    display: block;
+}
+
+.c-custom-option__fake-input--checkbox .c-custom-option__symbol {
+    width: 10px;
+    height: 10px;
+    fill: var(--color-alpha);
+}
+
+.c-custom-option__fake-input--radio .c-custom-option__symbol {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-alpha)
+}
+
+/* hover state */
+
+.c-custom-option:hover .c-custom-option__fake-input {
+}
+
+/* focused and active state */
+
+.c-option--hidden:focus + .c-custom-option .c-custom-option__fake-input,
+.c-option--hidden:active + .c-custom-option .c-custom-option__fake-input {
+    border-color: var(--color-alpha-x-light);
+    box-shadow: var(--global-input-boxShadow--focus);
+}
+
+/* checked state */
+
+.c-option--hidden:checked + .c-custom-option .c-custom-option__symbol {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/*
+    Component: Custom Toggle
+    ---
+    Visually change a checkbox into a toggle
+*/
+
+.c-custom-toggle-list {
+}
+
+.c-custom-toggle-list__item {
+}
+
+.c-custom-toggle-list__item + .c-custom-toggle-list__item {
+}
+
+.c-custom-toggle {
+}
+
+.c-custom-toggle--inverted {
+}
+
+.c-custom-toggle__fake-input {
+}
+
+.c-custom-toggle--inverted .c-custom-toggle__fake-input {
+}
+
+.c-custom-toggle__fake-input::after {
+}
+
+/* focused and active state */
+
+.c-option--hidden:focus + .c-custom-toggle .c-custom-toggle__fake-input,
+.c-option--hidden:active + .c-custom-toggle .c-custom-toggle__fake-input {
+}
+
+/* special active state */
+
+.c-option--hidden:active + .c-custom-toggle .c-custom-toggle__fake-input::after {
+}
+
+/* checked state */
+
+.c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input {
+}
+
+.c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input::after {
+}
+
+/* special checked active state */
+
+.c-option--hidden:active:checked + .c-custom-toggle .c-custom-toggle__fake-input::after {
+}
+
 /*------------------------------------*\
 #UTILITIES
 \*------------------------------------*/
