@@ -37,6 +37,11 @@
     --color-neutral-xx-dark: #4b4c60;
     --color-neutral-xxx-dark: #35374d;
     --color-neutral-xxxx-dark: #20223a;
+
+    --global-page-color: var(--color-neutral-xxxx-dark);
+    --global-page-backgroundColor: var(--color-neutral-xxxx-light);
+
+    --global-color-alpha-x-transparent: rgba(51, 133, 255, .2);
  
     /* Shadows */
     --shadow-color: #20223a15;
@@ -58,6 +63,7 @@
     --global-input-boxShadow--focus: 0 0 0 3px #3385ff33;
 }
  
+
 /*------------------------------------*\
 #GENERIC
 \*------------------------------------*/
@@ -67,18 +73,24 @@
     ---
     Global page styles + universal box-sizing:
 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --global-page-color: White;
+        --global-page-backgroundColor: var(--color-neutral-xxxx-dark);
+    }
  
 html {
     font-size: 16px;
     line-height: 1.5;
     font-family: "Inter UI Web", Helvetica, arial, sans-serif;
-    color: var(--color-neutral-xxxx-dark);
+    color: var(--global-page-color);
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: var(--color-neutral-xxxx-light);
+    background-color: var(--global-page-backgroundColor);
 }
  
+
 *,
 *:before,
 *:after {
@@ -531,16 +543,24 @@ input::placeholder {
 }
  
 .c-logo__path--1 {
-    fill: var(--color-neutral-xxxx-dark);
+  fill: var(--logo__path--1--fill, var(--global-color-neutral-xxxx-dark));
 }
- 
+
 .c-logo__path--2 {
-    fill: var(--color-alpha);
+  fill: var(--logo__path--2--fill, var(--global-color-alpha));
 }
- 
+
 .c-logo__path--3 {
-    fill: var(--color-alpha-x-dark);
+  fill: var(--logo__path--3--fill, var(--global-color-alpha-x-dark));
 }
+
+@media (prefers-color-scheme: dark) {
+    .c-logo {
+      --logo__path--1--fill: White;
+      --logo__path--2--fill: var(--logo__path--1--fill);
+      --logo__path--3--fill: var(--logo__path--1--fill);
+    }
+  }
  
 /* Light logo alternative */
  
@@ -555,7 +575,7 @@ input::placeholder {
 */
  
 .c-card {
-    background-color: white;
+    background-color: var(--c-card-background-color, white);
     margin-bottom: 24px;
     border-radius: var(--radius);
     box-shadow: 0 0 0 1px rgba(0,0,0, 0.05), 0 2px 4px rgba(0,0,0,.075);
@@ -571,8 +591,8 @@ input::placeholder {
  
 .c-card__footer {
     text-align: center;
-    border-top: 1px solid var(--color-neutral-xxx-light);
-    background-color: var(--color-neutral-xxxx-light);
+    border-top: 1px solid var(--c-footer-border-top, --color-neutral-xxx-light);
+    background-color: var(--c-footer-bg-color, --color-neutral-xxxx-light);
 }
  
 .c-card__title {
@@ -580,6 +600,15 @@ input::placeholder {
     font-size: 18px;
     line-height: 24px;
     font-weight: 600;
+}
+
+@media (prefers-color-scheme: dark){
+    .c-card {
+        --c-card-background-color: var(--color-neutral-xxx-dark);
+        --c-footer-bg-color: var(--color-neutral-xxx-dark);
+        --c-footer-border-top: var(--color-neutral-xxxx-dark)
+    }
+
 }
  
 @media (min-width: 27em) {
@@ -618,10 +647,10 @@ input::placeholder {
     -moz-appearance: none;
     appearance: none;
     width: 100%;
-    border: 1px solid var(--color-neutral-xxx-light);
+    border: 1px solid var(--c-input-border-color, --color-neutral-xxx-light);
     border-radius: var(--radius);
     color: var(--color-neutral-xxxx-dark);
-    background-color: #fff;
+    background-color: var(--c-input-background-color,#fff);
     font-family: inherit;
     font-size: 16px;
     line-height: 24px;
@@ -632,16 +661,34 @@ input::placeholder {
 }
  
 .c-input:hover {
-    border-color: var(--color-neutral-xx-light);
+    border-color: var(--c-input-hover-border, --color-neutral-xx-light);
 }
  
 .c-input:focus,
 .c-input:active {
-    border-color: var(--color-alpha-x-light);
-    box-shadow: 0 0 0 3px var(--color-alpha-xx-light);
+    border-color: var(--c-input-focus-border, --color-alpha-x-light);
+    box-shadow: 0 0 0 3px var(--c-input-focus-shadow, --color-alpha-xx-light);
 }
  
 /* option input for checkboxes and radio buttons */
+
+@media (prefers-color-scheme: dark){
+    .c-input {
+        --c-input-background-color: var(--color-neutral-xxxx-dark);
+        --c-input-border-color: var(--color-neutral-xxxx-dark);
+    }
+
+    .c-input:hover {
+        --c-input-hover-border: var(--color-alpha);
+    }
+
+    .c-input:focus,
+    .c-input:active {
+        --c-input-focus-border: var(--color-alpha);
+        --c-input-focus-shadow: var(--color-alpha-light);
+    }
+
+}
  
 .c-option {
     margin-right: 8px;
@@ -658,13 +705,19 @@ input::placeholder {
     padding-bottom: 8px;
     font-size: 14px;
     line-height: 16px;
-    color: var(--color-neutral-x-dark);
+    color: var(--c-label-color, --color-neutral-x-dark);
 }
  
 .c-label--option {
     padding-bottom: 0;
 }
- 
+
+@media (prefers-color-scheme: dark){
+    .c-label{
+        --c-label-color: var(--color-neutral-x-light);
+    }
+}
+
 /*
     Component: Button
     ---
@@ -677,7 +730,7 @@ input::placeholder {
     border-radius: var(--radius);
     border: 1px solid var(--color-alpha-dark);
     background-color: var(--color-alpha);
-    color: #fff;
+    color: white;
     padding: 11px 16px;
     line-height: 24px;
     width: 100%;
@@ -698,6 +751,8 @@ input::placeholder {
     background-color: var(--color-alpha-dark);
     box-shadow: none;
 }
+
+
  
 /*
     Component: Option list
@@ -749,7 +804,8 @@ input::placeholder {
     display: flex;
     width: 16px;
     height: 16px;
-    border: 1px solid var(--color-neutral-xxx-light);
+    border: 1px solid var(--c-fake-input-border, --color-neutral-xxx-light);
+    background-color:var(--c-fake-input-bg, #fff);
     margin-right: 8px;
     box-shadow: var(--inset-shadow);
     justify-content: center;
@@ -799,6 +855,13 @@ input::placeholder {
     box-shadow: var(--global-input-boxShadow--focus);
 }
 
+@media (prefers-color-scheme: dark){
+    .c-custom-option__fake-input{
+        --c-fake-input-border: var(--color-neutral-xxxx-dark);
+        --c-fake-input-bg: var(--color-neutral-xxxx-dark);
+        
+    }  
+}
 /* checked state */
 
 .c-option--hidden:checked + .c-custom-option .c-custom-option__symbol {
@@ -811,6 +874,20 @@ input::placeholder {
     ---
     Visually change a checkbox into a toggle
 */
+.c-toggle-list__item + .c-toggle-list__item {
+    /* een c-toggle-list__item grenst aan een andere c-toggle-list-item */
+    margin-top: 24px;
+}
+
+.c-custom-toggle--inverted {
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.c-custom-toggle--inverted .c-custom-toggle__fake-input {
+    margin-right: 0;
+}
 
 .c-custom-toggle-list {
 }
@@ -822,24 +899,57 @@ input::placeholder {
 }
 
 .c-custom-toggle {
+    display: flex;
+    --toggle-translateX: 0;
+    --toggle-borderColor: var(--color-neutral-xxx-light);
+    --toggle-backgroundColor: var(--color-neutral-xxxx-light);
+
+    --toggle-boxShadow: 0 0 0 0; /* standaard 'lege' box-shadow */
+    --toggle-boxShadowColor: var(--global-color-alpha-x-transparent);
+    align-items: center;
 }
 
 .c-custom-toggle--inverted {
 }
 
 .c-custom-toggle__fake-input {
+    display: block;
+    width: 48px;
+    height: 24px;
+
+    margin-right: 16px;
+
+    border: 1px solid var(--toggle-borderColor);
+    background: var(--toggle-backgroundColor);
+    border-radius: 24px;
+    transition: all 200ms ease-out;
 }
 
 .c-custom-toggle--inverted .c-custom-toggle__fake-input {
 }
 
 .c-custom-toggle__fake-input::after {
+    display: block;
+    content: "";    /* VERPLICHT voor elke ::before of ::after !!*/
+    height: 22px;
+    width: 22px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+    transform: translateX(var(--toggle-translateX));
+
+
+    will-change: transform; /* puur voor performance, de browser weet dat dit kan aanpassen */
+    transition: transform 200ms ease-out; /* all is een slecht idee voor performance */
+
 }
 
 /* focused and active state */
 
 .c-option--hidden:focus + .c-custom-toggle .c-custom-toggle__fake-input,
 .c-option--hidden:active + .c-custom-toggle .c-custom-toggle__fake-input {
+    border-color: var(--color-alpha-x-light);
+    box-shadow: var(--global-input-boxShadow--focus);
 }
 
 /* special active state */
@@ -852,7 +962,16 @@ input::placeholder {
 .c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input {
 }
 
-.c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input::after {
+/* .c-option--hidden:checked + .c-custom-toggle .c-custom-toggle__fake-input::after {
+    transform: translateX(24px);
+} */
+
+.c-option--hidden:checked + .c-custom-toggle {
+    --toggle-translateX: 24px; /* de ::after zal aanpassen, want dit volgt de scope van de parent! */
+    --toggle-borderColor: var(--color-alpha-dark);
+    --toggle-backgroundColor: var(--color-alpha);
+
+    --toggle-boxShadow: 0 0 0 4px; /* standaard 'lege' box-shadow */
 }
 
 /* special checked active state */
@@ -860,6 +979,19 @@ input::placeholder {
 .c-option--hidden:active:checked + .c-custom-toggle .c-custom-toggle__fake-input::after {
 }
 
+.c-custom-select{
+    display: block;
+}
+
+.c-custom-select__symbol{
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    width: 24px;
+    height: 24px;
+    fill: var(--color-neutral-x-light);
+    pointer-events: none;
+}
 /*------------------------------------*\
 #UTILITIES
 \*------------------------------------*/
